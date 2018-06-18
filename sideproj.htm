@@ -1,0 +1,51 @@
+<html>
+<head>
+  <title>California MPA Toolkit</title>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <script src="jquery-3.3.1.js"></script>
+  <style>
+    #map{ width: 900px; height: 500px; }
+  </style>
+</head>
+<body>
+
+  <div id="map"></div>
+
+  <script>
+
+  // initialize the map, set to AVALON, CA
+  var map = L.map('map').setView([33.2392, -118.0020], 9);
+
+
+  // load a tile layer, swapped with ocean basemap
+  /*
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}',
+    {
+      attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
+      maxZoom: 16,
+      minZoom: 9
+    }).addTo(map);
+    */
+
+  //replaced the ESRI map with NOAA's nautical chart
+  L.tileLayer('//tileservice.charts.noaa.gov/tiles/18740_1/{z}/{x}/{y}.png',
+  {
+     attribution: 'Tiles &copy; NOAA &mdash; Sources: NOAA',
+     maxZoom: 12,
+     minZoom: 9
+  }).addTo(map);
+
+  //loading a geojson file to the map. For now just a point at Avalon
+  //using jquery
+  $.getJSON("point.geojson",function(data){
+    //add geojson after file loads
+    L.geoJson(data).addTo(map);
+  });
+  //works
+  
+  
+
+  </script>
+</body>
+</html>
