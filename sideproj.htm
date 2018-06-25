@@ -38,9 +38,14 @@
 
   //loading a geojson file to the map. For now just a point at Avalon
   //using jquery
-  $.getJSON("point.geojson",function(data){
+  $.getJSON("mpas.geojson",function(data){
     //add geojson after file loads
-    L.geoJson(data).addTo(map);
+    var mpa_layer = data;
+    var Mystyle = {
+      "color": "#ff0008"
+    };
+
+    L.geoJson(mpa_layer,{style: Mystyle}).addTo(map);
   });
   //works
   

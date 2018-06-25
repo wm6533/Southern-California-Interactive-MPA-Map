@@ -6,16 +6,28 @@ import csv
 
 def main():
     dic_of_coors = make_dict()
-    test(dic_of_coors)
+    #test(dic_of_coors)
     write_to_geojson(dic_of_coors)
 
 
 def write_to_geojson(a_dict):
     geo_file = open("mpas.geojson","w")
-    geo_file.write('{\n')#  {
-    geo_file.write('"type": FeatureCollection",\n')
-    geo_file.write('"features": [\n')#[
-    geo_file.write('{\n')#  {
+    geo_file.write('{\n')#  1{
+    geo_file.write('"type": "FeatureCollection",\n')
+    geo_file.write('"features": [\n')#1[
+    geo_file.write('{\n')#  2{
+    geo_file.write('"type": "Feature", "properties": { ')
+    #need to automate from here
+    geo_file.write('"name" : "Laguna Beach State Marine Reserve (SMR)"},')
+    geo_file.write('"geometry": { "type": "Polygon", "coordinates": [[')# 3{
+    #iterating through dic
+    k = 0
+    s = ""
+    for i in a_dict:
+        s = a_dict[k]
+        geo_file.write(str(s) + ",")
+        k+=1
+    geo_file.write(str(a_dict[0])+"]]}}]}\n")
     geo_file.close()
 
 
@@ -68,5 +80,27 @@ def test(some_dict):
     for i in some_dict:
         print some_dict[k]
         k+=1
+
+def pull_from_csv():
+    mpas = {}
+    name = ""
+    not_name = ""
+    test = open('dict.csv','r')
+    for line in test:
+        for letter in line:
+            if letter == ",":
+                print name
+                return name
+            else:
+                name = name + letter
+    
+    
+        
+        
+pull_from_csv()
+
+
+
+
 
 main()

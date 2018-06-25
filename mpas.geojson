@@ -1,4 +1,5 @@
 {
-"type": FeatureCollection",
+"type": "FeatureCollection",
 "features": [
 {
+"type": "Feature", "properties": { "name" : "Laguna Beach State Marine Reserve (SMR)"},"geometry": { "type": "Polygon", "coordinates": [[[-117.819733, 33.553733],[-117.82, 33.503517],[-117.82, 33.511883],[-117.7544, 33.511883],[-117.819733, 33.553733]]]}}]}
