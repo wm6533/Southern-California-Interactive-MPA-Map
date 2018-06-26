@@ -2,4 +2,9 @@
 "type": "FeatureCollection",
 "features": [
 {
-"type": "Feature", "properties": { "name" : "Laguna Beach State Marine Reserve (SMR)"},"geometry": { "type": "Polygon", "coordinates": [[[-117.819733, 33.553733],[-117.82, 33.503517],[-117.82, 33.511883],[-117.7544, 33.511883],[-117.819733, 33.553733]]]}}]}
+"type": "Feature", "properties": { "name" : "Laguna Beach State Marine Reserve (SMR.)","type" : "SMR." },"geometry": { "type": "Polygon", "coordinates": [[[-117.8197, 33.5537], [-117.82, 33.5035], [-117.82, 33.5119], [-117.7544, 33.5119]]]}},{
+"type": "Feature", "properties": { "name" : "Abalone Cove State Marine Conservation Area (SMCA)","type" : "SMCA" },"geometry": { "type": "Polygon", "coordinates": [[[-118.3967, 33.7366], [-118.3967, 33.6859], [-118.375, 33.6808], [-118.375, 33.7373]]]}},{
+"type": "Feature", "properties": { "name" : "Point Dume State Marine Reserve (SMR.)","type" : "SMR." },"geometry": { "type": "Polygon", "coordinates": [[[-118.82, 34.013], [-118.82, 33.9493], [-118.7877, 33.951], [-118.7877, 34.0196]]]}},{
+"type": "Feature", "properties": { "name" : "Point Vicente State Marine Conservation Area (SMCA)","type" : "SMCA" },"geometry": { "type": "Polygon", "coordinates": [[[-118.4134, 33.7467], [-118.4822, 33.7467], [-118.3967, 33.6859], [-118.3967, 33.7366]]]}},{
+"type": "Feature", "properties": { "name" : "Point Dume State Marine Conservation Area (SMCA)","type" : "SMCA" },"geometry": { "type": "Polygon", "coordinates": [[[-118.8833, 34.0384], [-118.8833, 33.9857], [-118.82, 33.9493], [-118.82, 34.013]]]}},{
+"type": "Feature", "properties": { "name" : "Laguna Beach State Marine Conservation Area (SMCA)","type" : "SMCA" },"geometry": { "type": "Polygon", "coordinates": [[[-117.7544, 33.5119], [-117.82, 33.5119], [-117.82, 33.5008], [-117.746, 33.5008]]]}}]}

@@ -3,104 +3,102 @@
 
 import csv
 
-
 def main():
-    dic_of_coors = make_dict()
+    dic_1 = pull_from_csv()
+    dic_of_coors = clean_data(dic_1)
     #test(dic_of_coors)
     write_to_geojson(dic_of_coors)
 
+def test(some_dict):
+    for i in some_dict:
+        print some_dict[i]
 
 def write_to_geojson(a_dict):
     geo_file = open("mpas.geojson","w")
     geo_file.write('{\n')#  1{
     geo_file.write('"type": "FeatureCollection",\n')
     geo_file.write('"features": [\n')#1[
-    geo_file.write('{\n')#  2{
-    geo_file.write('"type": "Feature", "properties": { ')
     #need to automate from here
-    geo_file.write('"name" : "Laguna Beach State Marine Reserve (SMR)"},')
-    geo_file.write('"geometry": { "type": "Polygon", "coordinates": [[')# 3{
-    #iterating through dic
-    k = 0
-    s = ""
-    for i in a_dict:
-        s = a_dict[k]
-        geo_file.write(str(s) + ",")
-        k+=1
-    geo_file.write(str(a_dict[0])+"]]}}]}\n")
+    x = 0
+    for k in a_dict:
+        geo_file.write('{\n')#  2{
+        geo_file.write('"type": "Feature", "properties": { ')
+
+        l = str(k)
+        smt = str(k[-5:-1])
+       
+        geo_file.write('"name" : "'+l+'","type" : "'+str(smt)+'" },')
+        geo_file.write('"geometry": { "type": "Polygon", "coordinates": [')
+        geo_file.write(str(a_dict[k]))
+        fail = len(a_dict)
+        x+=1
+        if x == fail:
+            geo_file.write(']}}')
+        elif x!=fail:
+            geo_file.write(']}},')  
+    geo_file.write(']}')
+    
     geo_file.close()
-
-
-def make_dict():
-    dumb_list = ["33° 33.224' N. lat. 117° 49.184' W. long.;","33° 30.211' N. lat. 117° 49.200' W. long.;","33° 30.713' N. lat. 117° 49.200' W. long.; and","33° 30.713' N. lat. 117° 45.264' W. long."]
-
-    lat = ""
-    sub_lat=''
-    lon = ""
-    sub_lon=''
-    key = 0
-    coor_list=[]
-
-    coor_dict = {}
-
-    for value in dumb_list:
-        #handling lat
-        lat = value[0:10]
-        sub_lat = lat[4:10]
-        sub_lat = round((float(sub_lat)/60),6)
-        lat = lat[0:2]
-        lat = float(lat)
-        lat = lat + sub_lat
-
-
-        #handling lon
-        lon = value[20:40]
-        sub_lon = lon[5:11]
-        sub_lon = round(((float(sub_lon))/60),6)
-        lon = lon[0:3]
-        lon = float(lon)+sub_lon
-        lon = lon * -1
-
-        #adding both to a dict. Key auto generated
-        coor_list = [lon,lat]
-        coor_dict[key] = coor_list
-        key+=1
-    return coor_dict
-
-def write_to_csv(some_dict):
-    key = 0
-    with open('dict.csv','wb') as csv_file:
-        writer = csv.writer(csv_file)
-        for i in some_dict:
-            writer.writerow(some_dict[key])
-            key+=1
-
-def test(some_dict):
-    k = 0
-    for i in some_dict:
-        print some_dict[k]
-        k+=1
 
 def pull_from_csv():
     mpas = {}
-    name = ""
-    not_name = ""
-    test = open('dict.csv','r')
-    for line in test:
-        for letter in line:
-            if letter == ",":
-                print name
-                return name
-            else:
-                name = name + letter
+    coors = []
+    with open('dict.csv','rb') as coordinate_file:
+        local_reader = csv.reader(coordinate_file, delimiter=',')
+        for row in local_reader:
+            size = len(row)
+            x = 1
+            while x != size:
+                coors.append(row[x])
+                x+=1
+            mpas[row[0]] = coors
+            coors = []
+    coordinate_file.close()
+    return mpas
+            
+def clean_data(raw_coors):
+    coors = []
+    lat = ''
+    sub_lat = ''
     
-    
-        
-        
-pull_from_csv()
+    lon = ''
+    sub_lon = ''
 
+    clean_coors = []
+    clean_dict = {}
+    for mpa_name in raw_coors:
+        coors = raw_coors[mpa_name]
+        for element in coors:
+            lat = float(element[0:2])
+            sub_lat = float(element[4:10])
+            sub_lat = sub_lat/60
+            lat = round(lat+sub_lat,4)
+            #lat part
 
+            lon = float(element[20:23])
+            sub_lon = float(element[25:31])
+            sub_lon = sub_lon/60
+            lon = round(-1*(lon+sub_lon),4)
+            #lon part
 
+            
+            placeholder = [lon,lat]
+            clean_coors.append(placeholder)
+            placeholder = []
+        clean_dict[mpa_name] = clean_coors
+
+        clean_coors = []
+
+    return clean_dict
+            
+            
 
 
 main()
+
+
+
+
+
+
+
