@@ -69,22 +69,25 @@ def clean_data(raw_coors):
     for mpa_name in raw_coors:
         coors = raw_coors[mpa_name]
         for element in coors:
-            lat = float(element[0:2])
-            sub_lat = float(element[4:10])
-            sub_lat = sub_lat/60
-            lat = round(lat+sub_lat,4)
-            #lat part
+            if element == '':
+                pass
+            else:
+                lat = float(element[0:2])
+                sub_lat = float(element[4:10])
+                sub_lat = sub_lat/60
+                lat = round(lat+sub_lat,4)
+                #lat part
 
-            lon = float(element[20:23])
-            sub_lon = float(element[25:31])
-            sub_lon = sub_lon/60
-            lon = round(-1*(lon+sub_lon),4)
-            #lon part
+                lon = float(element[20:23])
+                sub_lon = float(element[25:31])
+                sub_lon = sub_lon/60
+                lon = round(-1*(lon+sub_lon),4)
+                #lon part
 
-            
-            placeholder = [lon,lat]
-            clean_coors.append(placeholder)
-            placeholder = []
+                
+                placeholder = [lon,lat]
+                clean_coors.append(placeholder)
+                placeholder = []
         clean_dict[mpa_name] = clean_coors
 
         clean_coors = []
