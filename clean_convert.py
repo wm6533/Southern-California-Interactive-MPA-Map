@@ -26,8 +26,9 @@ def write_to_geojson(a_dict):
 
         l = str(k)
         smt = str(k[-5:-1])
+        color = ""
        
-        geo_file.write('"name" : "'+l+'","type" : "'+str(smt)+'" },')
+        geo_file.write('"name" : "'+l+'","classification" : "'+str(smt)+'"},')
         geo_file.write('"geometry": { "type": "Polygon", "coordinates": [')
         geo_file.write(str(a_dict[k]))
         fail = len(a_dict)
@@ -41,6 +42,7 @@ def write_to_geojson(a_dict):
     geo_file.close()
 
 def pull_from_csv():
+    #basic sript, pulls data from a csv and stores as a dict
     mpas = {}
     coors = []
     with open('dict.csv','rb') as coordinate_file:
@@ -57,6 +59,7 @@ def pull_from_csv():
     return mpas
             
 def clean_data(raw_coors):
+    #strips chars out of coordinates
     coors = []
     lat = ''
     sub_lat = ''
@@ -71,6 +74,8 @@ def clean_data(raw_coors):
         for element in coors:
             if element == '':
                 pass
+                #apparently the length of each csv line is the longest line lenght in the file
+                #so, need to stop at certain points
             else:
                 lat = float(element[0:2])
                 sub_lat = float(element[4:10])
@@ -84,13 +89,21 @@ def clean_data(raw_coors):
                 lon = round(-1*(lon+sub_lon),4)
                 #lon part
 
-                
+                #geojson is x,y so lat/lon need to flip
                 placeholder = [lon,lat]
                 clean_coors.append(placeholder)
                 placeholder = []
         clean_dict[mpa_name] = clean_coors
+        
 
         clean_coors = []
+
+    #need to append the first coordinate a the end, as otherwise will not close the geojson
+    for key in clean_dict:
+        array = clean_dict[key]
+        end = array[0]
+        array.append(end)
+        clean_dict[key] = array
 
     return clean_dict
             
